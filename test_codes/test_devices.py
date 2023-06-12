@@ -8,8 +8,12 @@ import sys
 import pygame
 import pygame._sdl2.audio as sdl2_audio
 
-pygame.mixer.init()
-print("Start.")
+# Use this for 5.1 devices, will fail if no 5.1 devices can be found
+pygame.mixer.init(channels=6)
+
+# Use this for HDMI/Headphone debugging
+#pygame.mixer.init(channels=2)
+print("Listing Devices:")
 print(sdl2_audio.get_audio_device_names(False))
 
 

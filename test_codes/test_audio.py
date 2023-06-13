@@ -11,8 +11,11 @@ import glob
 from gpiozero import Button, Device
 import time
 
+# Full form of pre_init syntax for reference:
+# pre_init(frequency=44100, size=-16, channels=2, buffer=512, devicename=None, allowedchanges=AUDIO_ALLOW_FREQUENCY_CHANGE | AUDIO_ALLOW_CHANNELS_CHANGE)
+
 # Initialize pygame mixer to have 5.1 channels
-pygame.mixer.pre_init(channels=6)
+pygame.mixer.pre_init(channels=6, frequency=22500)
 #pygame.mixer.pre_init(channels=2) # Use for testing with HDMI/Headphone options
 pygame.init()
 

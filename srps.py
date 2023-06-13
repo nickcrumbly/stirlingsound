@@ -9,12 +9,25 @@ import glob
 from gpiozero import Button, Device
 
 # To drive from PC
-from gpiozero.pins.mock import MockFactory
-Device.pin_factory = MockFactory()
+#from gpiozero.pins.mock import MockFactory
+#Device.pin_factory = MockFactory()
 
 # Initialize pygame mixer to have 5.1 channels
-pygame.mixer.pre_init(channels=6)
+pygame.mixer.pre_init(channels=6, freq=22500)
 pygame.init()
+
+ichan = pygame.mixer.set_reserved(2)
+if ichan != 2:
+    print("Error, cannot reserve two playback channels")
+    sys.exit()
+
+ichan = pygame.mixer.Channel(0) # For the inspector sounds.
+tchan = pygame.mixer.Channel(1) # For the train sounds.
+
+boot_sound = pygame.mixer.Sound('inspector/allaboard.wav')
+ichan.play(boot_sound)
+
+
 
 # Load the sounds
 pass_files = glob.glob('./pass/*.wav')
@@ -32,20 +45,11 @@ for i in start_files:
     starts.append(pygame.mixer.Sound(i))
 
 
-inspA = pygame.mixer.Sound('inspector/clipA.wav')
-inspB = pygame.mixer.Sound('inspector/clipB.wav')
-inspC = pygame.mixer.Sound('inspector/clipC.wav')
-inspD = pygame.mixer.Sound('inspector/clipD.wav')
-inspE = pygame.mixer.Sound('inspector/clipE.wav')
-
-
-ichan = pygame.mixer.set_reserved(2)
-if ichan != 2:
-    print("Error, cannot reserve two playback channels")
-    sys.exit()
-
-ichan = pygame.mixer.Channel(0) # For the inspector sounds.
-tchan = pygame.mixer.Channel(1) # For the train sounds.
+inspA = pygame.mixer.Sound('inspector/clipA.ogg')
+inspB = pygame.mixer.Sound('inspector/clipB.ogg')
+inspC = pygame.mixer.Sound('inspector/clipC.ogg')
+inspD = pygame.mixer.Sound('inspector/clipD.ogg')
+inspE = pygame.mixer.Sound('inspector/clipE.ogg')
 
 
 # State Flags
@@ -169,7 +173,7 @@ def released(lever):
             LEVER1_4S = False
             LEVER1_35S = False
 
-                
+
     if lever == 2:
         # 0 - 4 seconds in
         if not LEVER2_4S and not LEVER2_35S:
@@ -193,7 +197,7 @@ def released(lever):
         if LEVER2_35S:
             LEVER2_4S = False
             LEVER2_35S = False
-            
+
 
 
     if lever == 3:
@@ -220,7 +224,7 @@ def released(lever):
             LEVER3_4S = False
             LEVER3_35S = False
 
-                
+
 
 def pulled(lever):
 
@@ -242,13 +246,13 @@ def pulled(lever):
             ichan.play(inspD)
         elif ((not LEVER2_35S or not LEVER3_35S) and switch2.is_pressed and switch3.is_pressed):
             ichan.stop()
-            ichan.play(inspE)                    
+            ichan.play(inspE)
         elif (LEVER2_35S and switch2.is_pressed) or (LEVER3_35S and switch3.is_pressed):
             tchan.fadeout(1000)
             ichan.play(inspD)
         elif ((LEVER2_35S or LEVER3_35S) and switch2.is_pressed and switch3.is_pressed):
             tchan.fadeout(1000)
-            ichan.play(inspE)        
+            ichan.play(inspE)
         else:
             tchan.play(random.choice(starts))
             pygame.time.set_timer(event_4s_lever1, 4000, loops=1)
@@ -273,12 +277,13 @@ def pulled(lever):
             ichan.play(inspD)
         elif ((not LEVER1_35S or not LEVER3_35S) and switch1.is_pressed and switch3.is_pressed):
             ichan.stop()
-            ichan.play(inspE)                    
+            ichan.play(inspE)
         elif ((LEVER1_35S or LEVER3_35S) and switch1.is_pressed and switch3.is_pressed):
             tchan.fadeout(1000)
-            ichan.play(inspE)            
+            ichan.play(inspE)
         else:
-            tchan.play(pass2)
+            tchan.play(random.choice(passes))
+	    # tchan.play(pass2)
             pygame.time.set_timer(event_4s_lever2, 4000, loops=1)
             pygame.time.set_timer(event_35s_lever2, 35000, loops=1)
 
@@ -301,12 +306,13 @@ def pulled(lever):
             ichan.play(inspD)
         elif ((not LEVER1_35S or not LEVER2_35S) and switch1.is_pressed and switch2.is_pressed):
             ichan.stop()
-            ichan.play(inspE)                    
+            ichan.play(inspE)
         elif ((LEVER1_35S or LEVER2_35S) and switch1.is_pressed and switch2.is_pressed):
             tchan.fadeout(1000)
             ichan.play(inspE)
         else:
-            tchan.play(pass3)
+            # tchan.play(pass3)
+            tchan.play(random.choice(passes))
             pygame.time.set_timer(event_4s_lever3, 4000, loops=1)
             pygame.time.set_timer(event_35s_lever3, 35000, loops=1)
 
@@ -320,7 +326,7 @@ def diagp():
     print('Lever1: {:10s}\t4s: {:10s}\t35s: {:10s}\nLever2: {:10s}\t4s: {:10s}\t35s: {:10s}\nLever3: {:10s}\t4s: {:10s}\t35s: {:10s}\nTrainchan: {:10s}\tInspChan: {:10s}\n'.format(str(switch1.is_pressed), str(LEVER1_4S), str(LEVER1_35S), str(switch2.is_pressed), str(LEVER2_4S), str(LEVER2_35S), str(switch3.is_pressed), str(LEVER3_4S), str(LEVER3_35S), str(tchan.get_busy()), str(ichan.get_busy())))
 
 
-    
+
 switch1 = Button(2)
 switch1.when_pressed = btnpressed
 switch1.when_released = btnreleased
@@ -553,5 +559,5 @@ if __name__ == "__main__":
         pygame.time.set_timer(pgq, 55000, loops=1) # Once
         #inspA plays for 15 seconds
 
-        
+
     main()

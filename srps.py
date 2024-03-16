@@ -7,14 +7,21 @@ import random
 import pygame
 import glob
 from gpiozero import Button, Device
+import os
+
+os.environ['SDL_VIDEODRIVER'] = "dummy"
 
 # To drive from PC
 #from gpiozero.pins.mock import MockFactory
 #Device.pin_factory = MockFactory()
 
+
+
 # Initialize pygame mixer to have 5.1 channels
-pygame.mixer.pre_init(channels=6, freq=22500)
+pygame.mixer.pre_init(channels=6, frequency=22500)
 pygame.init()
+
+screen = pygame.display.set_mode((500,500))
 
 ichan = pygame.mixer.set_reserved(2)
 if ichan != 2:
@@ -24,15 +31,15 @@ if ichan != 2:
 ichan = pygame.mixer.Channel(0) # For the inspector sounds.
 tchan = pygame.mixer.Channel(1) # For the train sounds.
 
-boot_sound = pygame.mixer.Sound('inspector/allaboard.wav')
+boot_sound = pygame.mixer.Sound('inspector/allaboard_22k5.wav')
 ichan.play(boot_sound)
 
 
 
 # Load the sounds
-pass_files = glob.glob('./pass/*.wav')
+pass_files = glob.glob('./pass/?pass?_22k5.wav')
 print(pass_files)
-start_files = glob.glob('./start/*.wav')
+start_files = glob.glob('./start/?start?_22k5.wav')
 print(start_files)
 
 passes = []
@@ -45,11 +52,18 @@ for i in start_files:
     starts.append(pygame.mixer.Sound(i))
 
 
-inspA = pygame.mixer.Sound('inspector/clipA.ogg')
-inspB = pygame.mixer.Sound('inspector/clipB.ogg')
-inspC = pygame.mixer.Sound('inspector/clipC.ogg')
-inspD = pygame.mixer.Sound('inspector/clipD.ogg')
-inspE = pygame.mixer.Sound('inspector/clipE.ogg')
+#inspA = pygame.mixer.Sound('inspector/clipA.ogg')
+#inspB = pygame.mixer.Sound('inspector/clipB.ogg')
+#inspC = pygame.mixer.Sound('inspector/clipC.ogg')
+#inspD = pygame.mixer.Sound('inspector/clipD.ogg')
+#inspE = pygame.mixer.Sound('inspector/clipE.ogg')
+
+
+inspA = pygame.mixer.Sound('inspector/clipA_22k5.wav')
+inspB = pygame.mixer.Sound('inspector/clipB_22k5.wav')
+inspC = pygame.mixer.Sound('inspector/clipC_22k5.wav')
+inspD = pygame.mixer.Sound('inspector/clipD_22k5.wav')
+inspE = pygame.mixer.Sound('inspector/clipE_22k5.wav')
 
 
 # State Flags
@@ -367,7 +381,7 @@ diagpe = pygame.event.Event(diagp_t)
 pgq_t = pygame.event.custom_type()
 pgq = pygame.event.Event(pgq_t)
 
-
+#pygame.quit()
 
 def main():
     global LEVER1_4S

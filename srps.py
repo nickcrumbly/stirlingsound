@@ -51,7 +51,7 @@ for i in pass_files:
 for i in start_files:
     starts.append(pygame.mixer.Sound(i))
 
-
+# Oggs take too long to load and just get expanded back to WAVs; easier to use WAV
 #inspA = pygame.mixer.Sound('inspector/clipA.ogg')
 #inspB = pygame.mixer.Sound('inspector/clipB.ogg')
 #inspC = pygame.mixer.Sound('inspector/clipC.ogg')

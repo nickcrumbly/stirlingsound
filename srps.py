@@ -174,8 +174,6 @@ def released(lever):
             pygame.time.set_timer(event_35s_lever1, 0)
             if not ichan.get_busy() and not INSPECTED and not (switch2.is_pressed or switch3.is_pressed):
                 ichan.play(inspA)
-            elif not ichan.get_busy() and INSPECTED and not (switch2.is_pressed or switch3.is_pressed):
-            	INSPECTED = False
 
         # 4 - 35 seconds in
         if LEVER1_4S and not LEVER1_35S:
@@ -185,12 +183,15 @@ def released(lever):
             pygame.time.set_timer(event_35s_lever1, 0)
             if not ichan.get_busy() and not INSPECTED and not (switch2.is_pressed or switch3.is_pressed):
                 ichan.play(inspB)
-            elif not ichan.get_busy() and INSPECTED and not (switch2.is_pressed or switch3.is_pressed):
-            	INSPECTED = False
 
         if LEVER1_35S:
             LEVER1_4S = False
             LEVER1_35S = False
+
+
+        if INSPECTED and not (switch2.is_pressed or switch3.is_pressed):
+           INSPECTED = False
+
 
 
     if lever == 2:
@@ -203,8 +204,6 @@ def released(lever):
             pygame.time.set_timer(event_35s_lever2, 0)
             if not ichan.get_busy() and not INSPECTED and not (switch1.is_pressed or switch3.is_pressed):
                 ichan.play(inspA)
-            elif not ichan.get_busy() and INSPECTED and not (switch1.is_pressed or switch3.is_pressed):
-            	INSPECTED = False
 
 
         # 4 - 35 seconds in
@@ -215,14 +214,15 @@ def released(lever):
             pygame.time.set_timer(event_35s_lever2, 0)
             if not ichan.get_busy() and not INSPECTED and not (switch1.is_pressed or switch3.is_pressed):
                 ichan.play(inspB)
-            elif not ichan.get_busy() and INSPECTED and not (switch1.is_pressed or switch3.is_pressed):
-            	INSPECTED = False
 
 
         if LEVER2_35S:
             LEVER2_4S = False
             LEVER2_35S = False
 
+
+        if INSPECTED and not (switch1.is_pressed or switch3.is_pressed):
+           INSPECTED = False
 
 
     if lever == 3:
@@ -235,8 +235,6 @@ def released(lever):
             pygame.time.set_timer(event_35s_lever3, 0)
             if not ichan.get_busy() and not INSPECTED and not (switch1.is_pressed or switch2.is_pressed):
                 ichan.play(inspA)
-            elif not ichan.get_busy() and INSPECTED and not (switch1.is_pressed or switch2.is_pressed):
-            	INSPECTED = False
 
 
         # 4 - 35 seconds in
@@ -247,13 +245,15 @@ def released(lever):
             pygame.time.set_timer(event_35s_lever3, 0)
             if not ichan.get_busy() and not INSPECTED and not (switch1.is_pressed or switch2.is_pressed):
                 ichan.play(inspB)
-            elif not ichan.get_busy() and INSPECTED and not (switch1.is_pressed or switch2.is_pressed):
-            	INSPECTED = False
 
 
         if LEVER3_35S:
             LEVER3_4S = False
             LEVER3_35S = False
+
+
+        if INSPECTED and not (switch1.is_pressed or switch2.is_pressed):
+           INSPECTED = False
 
 
 

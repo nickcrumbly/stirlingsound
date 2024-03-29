@@ -36,6 +36,7 @@ tchan = pygame.mixer.Channel(1) # For the train sounds.
 
 boot_sound = pygame.mixer.Sound('inspector/allaboard_22k5.wav')
 if not testmode:
+    print("LIVE")
     ichan.play(boot_sound) # PC Testing
 
 
@@ -263,7 +264,12 @@ def pulled(lever):
     diagp()
 
     if lever == 1:
-        if (not LEVER2_4S and not LEVER2_35S and switch2.is_pressed) or (not LEVER3_4S and not LEVER3_35S and switch3.is_pressed):
+        if switch2.is_pressed and switch3.is_pressed:
+            tchan.fadeout(100)
+            ichan.fadeout(100)
+            INSPECTED = True
+            ichan.play(inspE)
+        elif (not LEVER2_4S and not LEVER2_35S and switch2.is_pressed) != (not LEVER3_4S and not LEVER3_35S and switch3.is_pressed):
             tchan.fadeout(1000)
             pygame.time.set_timer(event_4s_lever2, 0)
             pygame.time.set_timer(event_4s_lever3, 0)
@@ -271,18 +277,19 @@ def pulled(lever):
             pygame.time.set_timer(event_35s_lever3, 0)
             INSPECTED = True
             ichan.play(inspC)
-        elif (LEVER2_4S and not LEVER2_35S and switch2.is_pressed) or (LEVER3_4S and not LEVER3_35S and switch3.is_pressed):
+        elif (LEVER2_4S and not LEVER2_35S and switch2.is_pressed) != (LEVER3_4S and not LEVER3_35S and switch3.is_pressed):
             tchan.fadeout(1000)
             pygame.time.set_timer(event_35s_lever2, 0)
             pygame.time.set_timer(event_35s_lever3, 0)
             INSPECTED = True
             ichan.play(inspD)
+        elif (LEVER2_35S and switch2.is_pressed) != (LEVER3_35S and switch3.is_pressed):
+            tchan.fadeout(1000)
+            INSPECTED = True
+            ichan.play(inspD)
         elif ((not LEVER2_35S or not LEVER3_35S) and switch2.is_pressed and switch3.is_pressed):
             ichan.stop()
             ichan.play(inspE)
-        elif (LEVER2_35S and switch2.is_pressed) or (LEVER3_35S and switch3.is_pressed):
-            tchan.fadeout(1000)
-            ichan.play(inspD)
         elif ((LEVER2_35S or LEVER3_35S) and switch2.is_pressed and switch3.is_pressed):
             tchan.fadeout(1000)
             ichan.play(inspE)
@@ -293,7 +300,12 @@ def pulled(lever):
 
 
     if lever == 2:
-        if (not LEVER1_4S and not LEVER1_35S and switch1.is_pressed) or (not LEVER3_4S and not LEVER3_35S and switch3.is_pressed):
+        if switch1.is_pressed and switch3.is_pressed:
+            tchan.fadeout(100)
+            ichan.fadeout(100)
+            INSPECTED = True
+            ichan.play(inspE)
+        elif (not LEVER1_4S and not LEVER1_35S and switch1.is_pressed) != (not LEVER3_4S and not LEVER3_35S and switch3.is_pressed):
             tchan.fadeout(1000)
             pygame.time.set_timer(event_4s_lever1, 0)
             pygame.time.set_timer(event_4s_lever3, 0)
@@ -301,21 +313,22 @@ def pulled(lever):
             pygame.time.set_timer(event_35s_lever3, 0)
             INSPECTED = True
             ichan.play(inspC)
-        elif (LEVER1_4S and not LEVER1_35S and switch1.is_pressed) or (LEVER3_4S and not LEVER3_35S and switch3.is_pressed):
+        elif (LEVER1_4S and not LEVER1_35S and switch1.is_pressed) != (LEVER3_4S and not LEVER3_35S and switch3.is_pressed):
             tchan.fadeout(1000)
             pygame.time.set_timer(event_35s_lever1, 0)
             pygame.time.set_timer(event_35s_lever3, 0)
             INSPECTED = True
             ichan.play(inspD)
-        elif (LEVER1_35S and switch1.is_pressed) or (LEVER3_35S and switch3.is_pressed):
+        elif (LEVER1_35S and switch1.is_pressed) != (LEVER3_35S and switch3.is_pressed):
             tchan.fadeout(1000)
+            INSPECTED = True
             ichan.play(inspD)
-        elif ((not LEVER1_35S or not LEVER3_35S) and switch1.is_pressed and switch3.is_pressed):
-            ichan.stop()
-            ichan.play(inspE)
-        elif ((LEVER1_35S or LEVER3_35S) and switch1.is_pressed and switch3.is_pressed):
-            tchan.fadeout(1000)
-            ichan.play(inspE)
+#        elif ((not LEVER1_35S or not LEVER3_35S) and switch1.is_pressed and switch3.is_pressed):
+#            ichan.stop()
+#            ichan.play(inspE)
+#        elif ((LEVER1_35S or LEVER3_35S) and switch1.is_pressed and switch3.is_pressed):
+#            tchan.fadeout(1000)
+#            ichan.play(inspE)
         else:
             tchan.play(random.choice(passes))
             pygame.time.set_timer(event_4s_lever2, 4000, loops=1)
@@ -323,7 +336,12 @@ def pulled(lever):
 
 
     if lever == 3:
-        if (not LEVER2_4S and not LEVER2_35S and switch2.is_pressed) or (not LEVER1_4S and not LEVER1_35S and switch1.is_pressed):
+        if switch1.is_pressed and switch2.is_pressed:
+            tchan.fadeout(100)
+            ichan.fadeout(100)
+            INSPECTED = True
+            ichan.play(inspE)
+        elif (not LEVER2_4S and not LEVER2_35S and switch2.is_pressed) != (not LEVER1_4S and not LEVER1_35S and switch1.is_pressed):
             tchan.fadeout(1000)
             pygame.time.set_timer(event_4s_lever2, 0)
             pygame.time.set_timer(event_4s_lever1, 0)
@@ -331,21 +349,22 @@ def pulled(lever):
             pygame.time.set_timer(event_35s_lever1, 0)
             INSPECTED = True
             ichan.play(inspC)
-        elif (LEVER2_4S and not LEVER2_35S and switch2.is_pressed) or (LEVER1_4S and not LEVER1_35S and switch1.is_pressed):
+        elif (LEVER2_4S and not LEVER2_35S and switch2.is_pressed) != (LEVER1_4S and not LEVER1_35S and switch1.is_pressed):
             tchan.fadeout(1000)
             pygame.time.set_timer(event_35s_lever2, 0)
             pygame.time.set_timer(event_35s_lever1, 0)
             INSPECTED = True
             ichan.play(inspD)
-        elif (LEVER1_35S and switch1.is_pressed) or (LEVER2_35S and switch2.is_pressed):
+        elif (LEVER1_35S and switch1.is_pressed) != (LEVER2_35S and switch2.is_pressed):
             tchan.fadeout(1000)
+            INSPECTED = True
             ichan.play(inspD)
-        elif ((not LEVER1_35S or not LEVER2_35S) and switch1.is_pressed and switch2.is_pressed):
-            ichan.stop()
-            ichan.play(inspE)
-        elif ((LEVER1_35S or LEVER2_35S) and switch1.is_pressed and switch2.is_pressed):
-            tchan.fadeout(1000)
-            ichan.play(inspE)
+#        elif ((not LEVER1_35S or not LEVER2_35S) and switch1.is_pressed and switch2.is_pressed):
+#            ichan.stop()
+#            ichan.play(inspE)
+#        elif ((LEVER1_35S or LEVER2_35S) and switch1.is_pressed and switch2.is_pressed):
+#            tchan.fadeout(1000)
+#            ichan.play(inspE)
         else:
             tchan.play(random.choice(passes))
             pygame.time.set_timer(event_4s_lever3, 4000, loops=1)
@@ -525,15 +544,15 @@ if __name__ == "__main__":
 
     if TEST == "C":
         pygame.time.set_timer(l1pull, 3000, loops=1) # Once
-        pygame.time.set_timer(l2pull, 6000, loops=1) # Once
+        pygame.time.set_timer(l3pull, 6000, loops=1) # Once
         pygame.time.set_timer(pgq, 12000, loops=1) # Once
-        #inspA plays for 15 seconds
+        #inspC plays for 15 seconds
 
     if TEST == "D":
         pygame.time.set_timer(l1pull, 3000, loops=1) # Once
-        pygame.time.set_timer(l2pull, 8000, loops=1) # Once
+        pygame.time.set_timer(l3pull, 8000, loops=1) # Once
         pygame.time.set_timer(pgq, 12000, loops=1) # Once
-        #inspA plays for 15 seconds
+        #inspD plays
 
     if TEST == "E":
         pygame.time.set_timer(l2pull, 3000, loops=1) # Once
@@ -594,21 +613,34 @@ if __name__ == "__main__":
         pygame.time.set_timer(pgq, 55000, loops=1) # Once
         #inspA plays for 15 seconds
 
+    # Problem2 of March2024 - Issue #2 on github
     if TEST == "N":
         pygame.time.set_timer(l1pull, 1000, loops=1)
         pygame.time.set_timer(l2pull, 3000, loops=1)
         pygame.time.set_timer(l1norm, 8000, loops=1)
         pygame.time.set_timer(l2norm, 10000, loops=1)
         pygame.time.set_timer(pgq, 12000, loops=1)
-        #inspA plays for 15 seconds
+        #inspC should play and not get upset when you release levers
 
+    # Problem3 of March2024 - Issue #3 on github
     if TEST == "O":
         pygame.time.set_timer(l2pull, 1000, loops=1)
         pygame.time.set_timer(l3pull, 8000, loops=1)
         pygame.time.set_timer(l3norm, 13000, loops=1)
         pygame.time.set_timer(l2norm, 15000, loops=1)
         pygame.time.set_timer(pgq, 18000, loops=1)
-        #inspA plays for 15 seconds
+        #inspD should play and not get upset when you release levers
+
+    # Problem4 of March2024 - Issue #4 on github
+    if TEST == "P":
+        pygame.time.set_timer(l1pull, 1000, loops=1)
+        pygame.time.set_timer(l2pull, 8000, loops=1)
+        pygame.time.set_timer(l3pull, 25000, loops=1)
+        pygame.time.set_timer(l1norm, 28000, loops=1)
+        pygame.time.set_timer(l2norm, 29000, loops=1)
+        pygame.time.set_timer(l3norm, 31000, loops=1)
+        pygame.time.set_timer(pgq, 35000, loops=1)
+        #inspE should play once and not get upset when you release levers
 
 
     main()

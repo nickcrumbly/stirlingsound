@@ -634,13 +634,13 @@ if __name__ == "__main__":
     # Problem4 of March2024 - Issue #4 on github
     if TEST == "P":
         pygame.time.set_timer(l1pull, 1000, loops=1)
-        pygame.time.set_timer(l2pull, 8000, loops=1)
-        pygame.time.set_timer(l3pull, 25000, loops=1)
-        pygame.time.set_timer(l1norm, 28000, loops=1)
-        pygame.time.set_timer(l2norm, 29000, loops=1)
-        pygame.time.set_timer(l3norm, 31000, loops=1)
-        pygame.time.set_timer(pgq, 35000, loops=1)
-        #inspE should play once and not get upset when you release levers
+        pygame.time.set_timer(l2pull, 3000, loops=1)
+        pygame.time.set_timer(l3pull, 5000, loops=1)
+        pygame.time.set_timer(l1norm, 10000, loops=1)
+        pygame.time.set_timer(l2norm, 12000, loops=1)
+        pygame.time.set_timer(l3norm, 13000, loops=1)
+        pygame.time.set_timer(pgq, 17000, loops=1)
+        #inspC should play once then be interrupted by inspE and not get upset when you release levers
 
 
     main()

@@ -373,11 +373,11 @@ def pulled(lever):
 
 
 def printout():
-        print('Lever1: {:6s}\tLever2: {:6s}\tLever3: {:6s}\t\tTrainchan: {:6s}\tInspChan: {:6s}'.format(str(switch1.is_pressed), str(switch2.is_pressed), str(switch3.is_pressed), str(tchan.get_busy()), str(ichan.get_busy())))
+        print('Lever1: {:6s}\tLever2: {:6s}\tLever3: {:6s}\t\tTrainchan: {:6s}\tInspChan: {:6s}\tInspected: {:6s}'.format(str(switch1.is_pressed), str(switch2.is_pressed), str(switch3.is_pressed), str(tchan.get_busy()), str(ichan.get_busy()), str(INSPECTED) ))
 
 
 def diagp():
-    print('\nLever1: {:10s}\t4s: {:10s}\t35s: {:10s}\nLever2: {:10s}\t4s: {:10s}\t35s: {:10s}\nLever3: {:10s}\t4s: {:10s}\t35s: {:10s}\nTrainchan: {:10s}\tInspChan: {:10s}\n'.format(str(switch1.is_pressed), str(LEVER1_4S), str(LEVER1_35S), str(switch2.is_pressed), str(LEVER2_4S), str(LEVER2_35S), str(switch3.is_pressed), str(LEVER3_4S), str(LEVER3_35S), str(tchan.get_busy()), str(ichan.get_busy())))
+    print('\nLever1: {:10s}\t4s: {:10s}\t35s: {:10s}\nLever2: {:10s}\t4s: {:10s}\t35s: {:10s}\nLever3: {:10s}\t4s: {:10s}\t35s: {:10s}\nTrainchan: {:10s}\tInspChan: {:10s}\tINSPECTED: {:10s}\n'.format(str(switch1.is_pressed), str(LEVER1_4S), str(LEVER1_35S), str(switch2.is_pressed), str(LEVER2_4S), str(LEVER2_35S), str(switch3.is_pressed), str(LEVER3_4S), str(LEVER3_35S), str(tchan.get_busy()), str(ichan.get_busy()), str(INSPECTED) ))
 
 
 
@@ -636,10 +636,21 @@ if __name__ == "__main__":
         pygame.time.set_timer(l1pull, 1000, loops=1)
         pygame.time.set_timer(l2pull, 3000, loops=1)
         pygame.time.set_timer(l3pull, 5000, loops=1)
-        pygame.time.set_timer(l1norm, 10000, loops=1)
-        pygame.time.set_timer(l2norm, 12000, loops=1)
-        pygame.time.set_timer(l3norm, 13000, loops=1)
-        pygame.time.set_timer(pgq, 17000, loops=1)
+        pygame.time.set_timer(l1norm, 25000, loops=1)
+        pygame.time.set_timer(l2norm, 27000, loops=1)
+        pygame.time.set_timer(l3norm, 29000, loops=1)
+        pygame.time.set_timer(pgq, 31000, loops=1)
+        #inspC should play once then be interrupted by inspE and not get upset when you release levers
+
+    # Cancelling INSPECTOR test
+    if TEST == "Q":
+        pygame.time.set_timer(l1pull, 1000, loops=1)
+        pygame.time.set_timer(l2pull, 3000, loops=1)
+        pygame.time.set_timer(l3pull, 15000, loops=2)
+        pygame.time.set_timer(l3norm, 20000, loops=2)
+        pygame.time.set_timer(l2norm, 22000, loops=1)
+        pygame.time.set_timer(l1norm, 24000, loops=1)
+        pygame.time.set_timer(pgq, 45000, loops=1)
         #inspC should play once then be interrupted by inspE and not get upset when you release levers
 
 
